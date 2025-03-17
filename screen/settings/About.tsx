@@ -54,38 +54,6 @@ const About: React.FC = () => {
     navigate('Licensing');
   };
 
-  const handleOnTwitterPress = () => {
-    Linking.openURL('https://twitter.com/bluewalletio');
-  };
-
-  const handleOnDiscordPress = () => {
-    Linking.openURL('https://discord.gg/btWq2Aby2z');
-  };
-
-  const handleOnTelegramPress = () => {
-    Linking.openURL('https://t.me/bluewallethat');
-  };
-
-  const handleOnGithubPress = () => {
-    Linking.openURL('https://github.com/BlueWallet/BlueWallet');
-  };
-
-  const handleOnRatePress = () => {
-    const options = {
-      AppleAppID: '1376878040',
-      GooglePackageName: 'io.bluewallet.bluewallet',
-      preferredAndroidMarket: AndroidMarket.Google,
-      preferInApp: Platform.OS !== 'android',
-      openAppStoreIfInAppFails: true,
-      fallbackPlatformURL: 'https://bluewallet.io',
-    };
-    Rate.rate(options, success => {
-      if (success) {
-        console.log('User Rated.');
-      }
-    });
-  };
-
   return (
     <ScrollView testID="AboutScrollView" contentInsetAdjustmentBehavior="automatic" automaticallyAdjustContentInsets>
       <BlueCard>
@@ -93,52 +61,6 @@ const About: React.FC = () => {
           <Image style={styles.logo} source={require('../../img/bluebeast.png')} />
           <Text style={styles.textFree}>{loc.settings.about_free}</Text>
           <Text style={[styles.textBackup, stylesHook.textBackup]}>{formatStringAddTwoWhiteSpaces(loc.settings.about_backup)}</Text>
-          {((Platform.OS === 'android' && hasGmsSync()) || Platform.OS !== 'android') && (
-            <Button onPress={handleOnRatePress} title={loc.settings.about_review + ' ⭐🙏'} />
-          )}
-        </View>
-      </BlueCard>
-      <ListItem
-        leftIcon={{
-          name: 'twitter',
-          type: 'font-awesome',
-          color: '#1da1f2',
-        }}
-        onPress={handleOnTwitterPress}
-        title={loc.settings.about_sm_twitter}
-      />
-      <ListItem
-        leftIcon={{
-          name: 'telegram',
-          type: 'font-awesome',
-          color: '#0088cc',
-        }}
-        onPress={handleOnTelegramPress}
-        title={loc.settings.about_sm_telegram}
-      />
-      <ListItem
-        leftIcon={{
-          name: 'discord',
-          type: 'font-awesome-5',
-          color: '#7289da',
-        }}
-        onPress={handleOnDiscordPress}
-        title={loc.settings.about_sm_discord}
-      />
-      <BlueCard>
-        <View style={[styles.buildWith, stylesHook.buildWith]}>
-          <BlueSpacing20 />
-          <BlueTextCentered>{loc.settings.about_awesome} 👍</BlueTextCentered>
-          <BlueSpacing20 />
-          <BlueTextCentered>React Native</BlueTextCentered>
-          <BlueTextCentered>bitcoinjs-lib</BlueTextCentered>
-          <BlueTextCentered>Nodejs</BlueTextCentered>
-          <BlueTextCentered>Electrum server</BlueTextCentered>
-          <BlueSpacing20 />
-          <TouchableOpacity accessibilityRole="button" onPress={handleOnGithubPress} style={[styles.buttonLink, stylesHook.buttonLink]}>
-            <Icon size={22} name="github" type="font-awesome-5" color={colors.foregroundColor} />
-            <Text style={[styles.textLink, stylesHook.textLink]}>{formatStringAddTwoWhiteSpaces(loc.settings.about_sm_github)}</Text>
-          </TouchableOpacity>
         </View>
       </BlueCard>
       <ListItem
@@ -203,10 +125,6 @@ const About: React.FC = () => {
         {getApplicationName()} ver {getVersion()} (build {getBuildNumber() + ' ' + branch})
       </BlueTextCentered>
       <BlueTextCentered>{new Date(Number(getBuildNumber()) * 1000).toUTCString()}</BlueTextCentered>
-      <BlueTextCentered>{getBundleId()}</BlueTextCentered>
-      <BlueTextCentered>
-        w, h = {width}, {height}
-      </BlueTextCentered>
       <BlueTextCentered>Unique ID: {getUniqueIdSync()}</BlueTextCentered>
       <View style={styles.copyToClipboard}>
         <TouchableOpacity
